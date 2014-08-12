@@ -1,29 +1,57 @@
-# Stoplight::Admin
+# [Stoplight Admin][1]
 
-TODO: Write a gem description
+A simple administration interface for [stoplight][2].  Monitor the
+status, failures, and invocations of your stoplights.  Change
+stoplight colors, or lock them in either red or green state.
 
-## Installation
+## Configuration
 
-Add this line to your application's Gemfile:
+This project is packaged as a Ruby gem so that you can easily embed it
+in your own code containing the configuration details for your
+[stoplight][2] data store.
 
-    gem 'stoplight-admin'
+First you'll need a `Gemfile`:
 
-And then execute:
+``` rb
+source 'https://rubygems.org'
 
-    $ bundle
+gem 'stoplight-admin', '~> 0.1.0'
+```
 
-Or install it yourself as:
+Run [Bundler][3] to install the dependencies:
 
-    $ gem install stoplight-admin
+``` sh
+$ bundle install
+```
+
+Lastly we need to make our (tiny) application. Here's a typical
+example using a local Redis data store:
+
+``` rb
+# app.rb
+
+require 'sinatra'
+require 'sinatra/stoplight_admin'
+
+REDIS_URL = 'redis://localhost:6379'
+set :data_store, Stoplight::DataStore::Redis.new(url: REDIS_URL)
+
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+``` sh
+$ bundle exec ruby app.rb
+```
 
-## Contributing
+## Credits
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Stoplight is brought to you by [@camdez][4] and [@tfausak][5] from
+[@OrgSync][6].
+
+[1]: https://github.com/orgsync/stoplight-admin
+[2]: https://github.com/orgsync/stoplight
+[3]: http://bundler.io
+[4]: https://github.com/camdez
+[5]: https://github.com/tfausak
+[6]: https://github.com/OrgSync
