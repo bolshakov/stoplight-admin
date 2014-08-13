@@ -1,4 +1,4 @@
-.jumbotron
+.jumbotron.hidden-xs.hidden-sm
   %h1 &#x1f6a6; All of the Lights
   %p Cop lights, flashlights, spotlights, strobe lights&hellip;
 
@@ -16,7 +16,7 @@
 
     .lights
       %table.table.table-hover
-        %thead
+        %thead.hidden-xs
           %tr
             %th Status
             %th
@@ -33,11 +33,15 @@
                 - if l[:green]
                   %form{method: 'post', action: '/red'}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
-                    %button{type: 'submit', class: 'btn btn-success'} GREEN
+                    %button{type: 'submit', class: 'btn btn-success'}
+                      G
+                      %span.hidden-xs> REEN
                 - else
                   %form{method: 'post', action: '/green'}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
-                    %button{type: 'submit', class: 'btn btn-danger'} RED
+                    %button{type: 'submit', class: 'btn btn-danger'}
+                      R
+                      %span.hidden-xs> ED
               %td.locked
                 - if l[:locked]
                   %form{method: 'post', action: '/unlock'}
