@@ -9,9 +9,7 @@ module Sinatra
     module Helpers
       def data_store
         return @data_store if defined?(@data_store)
-
-        Stoplight.data_store settings.data_store
-        @data_store = Stoplight.data_store
+        @data_store = Stoplight.data_store = settings.data_store
       end
 
       def lights

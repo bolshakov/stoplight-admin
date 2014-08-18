@@ -33,12 +33,12 @@ example using a local Redis data store:
 ``` rb
 # app.rb
 
+require 'redis'
 require 'sinatra'
 require 'sinatra/stoplight_admin'
 
-REDIS_URL = 'redis://localhost:6379'
-set :data_store, Stoplight::DataStore::Redis.new(url: REDIS_URL)
-
+redis = Redis.new(url: 'redis://localhost:6379')
+set :data_store, Stoplight::DataStore::Redis.new(redis)
 ```
 
 ## Usage
