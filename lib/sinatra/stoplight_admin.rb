@@ -95,6 +95,10 @@ module Sinatra
       def red(light)
         data_store.set_state(light, Stoplight::DataStore::STATE_LOCKED_RED)
       end
+
+      def purge
+        data_store.purge
+      end
     end
 
     def self.registered(app)
@@ -134,6 +138,11 @@ module Sinatra
         data_store.names
           .reject { |l| Stoplight.green?(l) }
           .each { |l| green(l) }
+        redirect to('/')
+      end
+
+      app.post '/purge' do
+        purge
         redirect to('/')
       end
     end
