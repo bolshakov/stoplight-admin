@@ -99,6 +99,12 @@ module Sinatra
       def purge
         data_store.purge
       end
+
+      def with_lights
+        [*params[:names]]
+          .map  { |l| URI.unescape(l) }
+          .each { |l| yield(l) }
+      end
     end
 
     def self.registered(app)
@@ -115,22 +121,22 @@ module Sinatra
       end
 
       app.post '/lock' do
-        [*params[:names]].each { |l| lock(l) }
+        with_lights { |l| lock(l) }
         redirect to('/')
       end
 
       app.post '/unlock' do
-        [*params[:names]].each { |l| unlock(l) }
+        with_lights { |l| unlock(l) }
         redirect to('/')
       end
 
       app.post '/green' do
-        [*params[:names]].each { |l| green(l) }
+        with_lights { |l| green(l) }
         redirect to('/')
       end
 
       app.post '/red' do
-        [*params[:names]].each { |l| red(l) }
+        with_lights { |l| red(l) }
         redirect to('/')
       end
 
