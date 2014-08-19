@@ -5,9 +5,9 @@
 .main
   - if lights.any?
     .btn-group
-      %form{method: 'post', action: '/green_all'}
+      %form{method: 'post', action: url('/green_all')}
         %button.btn-lg.btn.btn-success{type: 'submit', disabled: failure_count > 0 ? nil : 'disabled'} Greenify All
-      %form{method: 'post', action: '/purge'}
+      %form{method: 'post', action: url('/purge')}
         %button.btn-lg.btn.btn-default{type: 'submit'} Purge Lights
 
     .progress
@@ -33,25 +33,25 @@
             %tr
               %td.indicator
                 - if l[:green]
-                  %form{method: 'post', action: '/red'}
+                  %form{method: 'post', action: url('/red')}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
                     %button{type: 'submit', class: 'btn btn-success'}
                       G
                       %span.hidden-xs> REEN
                 - else
-                  %form{method: 'post', action: '/green'}
+                  %form{method: 'post', action: url('/green')}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
                     %button{type: 'submit', class: 'btn btn-danger'}
                       R
                       %span.hidden-xs> ED
               %td.locked
                 - if l[:locked]
-                  %form{method: 'post', action: '/unlock'}
+                  %form{method: 'post', action: url('/unlock')}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
                     %button{type: 'submit', class: 'btn btn-link'}
                       %span{class: 'glyphicon glyphicon-lock'}
                 - else
-                  %form{method: 'post', action: '/lock'}
+                  %form{method: 'post', action: url('/lock')}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
                     %button{type: 'submit', class: 'btn btn-link'}
                       %span{class: 'glyphicon glyphicon-minus'}
