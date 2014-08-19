@@ -41,6 +41,18 @@ redis = Redis.new(url: 'redis://localhost:6379')
 set :data_store, Stoplight::DataStore::Redis.new(redis)
 ```
 
+## Reverse Proxying
+
+If you run Stoplight Admin behind a reverse proxy (nginx, for
+instance) at a URL other than root, you'll need to add the following
+lines to your `app.rb` file:
+
+``` rb
+use Rack::Config do |env|
+  env['SCRIPT_NAME'] = 'your/prefix/here'
+end
+```
+
 ## Usage
 
 ``` sh
