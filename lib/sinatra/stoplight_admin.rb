@@ -23,7 +23,14 @@ module Sinatra
         green = Stoplight.green?(light)
         attempts = green ? 0  : data_store.attempts(light)
         failures = green ? [] : data_store.failures(light).map do |f|
-          JSON.parse(f)
+          begin
+            JSON.parse(f)
+          rescue JSON::ParserError
+            {
+              'error' => f,
+              'time'  => 'unknown time'
+            }
+          end
         end
 
         {
