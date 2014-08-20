@@ -49,7 +49,7 @@ lines to your `app.rb` file:
 
 ``` rb
 use Rack::Config do |env|
-  env['SCRIPT_NAME'] = 'your/prefix/here'
+  env['SCRIPT_NAME'] = '/your/prefix/here'
 end
 ```
 
