@@ -18,7 +18,7 @@ First you'll need a `Gemfile`:
 ``` rb
 source 'https://rubygems.org'
 
-gem 'stoplight-admin', '~> 0.2.2'
+gem 'stoplight-admin', '~> 0.2.3'
 ```
 
 Run [Bundler][3] to install the dependencies:
