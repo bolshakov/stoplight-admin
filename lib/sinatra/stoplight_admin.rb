@@ -20,17 +20,13 @@ module Sinatra
       end
 
       def light_info(light)
-        green = Stoplight.green?(light)
-        attempts = green ? 0  : data_store.attempts(light)
-        failures = green ? [] : data_store.failures(light).map do |f|
-          begin
-            JSON.parse(f)
-          rescue JSON::ParserError
-            {
-              'error' => f,
-              'time'  => 'unknown time'
-            }
-          end
+        green = Stoplight.data_store.green?(light)
+        attempts = green ? 0  : data_store.get_attempts(light)
+        failures = green ? [] : data_store.get_failures(light).map do |f|
+          {
+            'error' => f.error.inspect,
+            'time'  => f.time.to_s
+          }
         end
 
         {
@@ -51,7 +47,7 @@ module Sinatra
       def locked?(light_name)
         [Stoplight::DataStore::STATE_LOCKED_GREEN,
          Stoplight::DataStore::STATE_LOCKED_RED]
-          .include?(data_store.state(light_name))
+          .include?(data_store.get_state(light_name))
       end
 
       def stat_params(ls)
@@ -76,7 +72,7 @@ module Sinatra
 
       def lock(light)
         new_state =
-          if Stoplight.green?(light)
+          if Stoplight.data_store.green?(light)
             Stoplight::DataStore::STATE_LOCKED_GREEN
           else
             Stoplight::DataStore::STATE_LOCKED_RED
@@ -90,7 +86,7 @@ module Sinatra
       end
 
       def green(light)
-        if data_store.state(light) == Stoplight::DataStore::STATE_LOCKED_RED
+        if data_store.get_state(light) == Stoplight::DataStore::STATE_LOCKED_RED
           new_state = Stoplight::DataStore::STATE_LOCKED_GREEN
           data_store.set_state(light, new_state)
         end
@@ -104,7 +100,7 @@ module Sinatra
       end
 
       def purge
-        data_store.purge
+        data_store.clear_stale
       end
 
       def with_lights
@@ -149,7 +145,7 @@ module Sinatra
 
       app.post '/green_all' do
         data_store.names
-          .reject { |l| Stoplight.green?(l) }
+          .reject { |l| Stoplight.data_store.green?(l) }
           .each { |l| green(l) }
         redirect to('/')
       end
