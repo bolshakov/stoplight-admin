@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'stoplight-admin'
-  spec.version       = '0.2.3'
+  spec.version       = '0.2.4'
   spec.authors       = ['Cameron Desautels', 'Taylor Fausak']
   spec.email         = %w(camdez@gmail.com taylor@fausak.me)
   spec.summary       = %q{A simple administration interface for the stoplight gem.}
