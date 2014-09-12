@@ -22,12 +22,7 @@ module Sinatra
       def light_info(light)
         green = Stoplight.data_store.green?(light)
         attempts = green ? 0  : data_store.get_attempts(light)
-        failures = green ? [] : data_store.get_failures(light).map do |f|
-          {
-            'error' => f.error.inspect,
-            'time'  => f.time.to_s
-          }
-        end
+        failures = green ? [] : data_store.get_failures(light)
 
         {
           name: light,

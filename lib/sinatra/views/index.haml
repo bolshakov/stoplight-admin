@@ -61,10 +61,12 @@
                     - l[:failures].each do |failure|
                       %li
                         %span.error
-                          &= failure['error']
+                          &= failure.error_class
+                          \:
+                          &= failure.error_message
                         @
                         %span.timestamp
-                          &= failure['time']
+                          &= failure.time
               %td.attempts
                 - if l[:attempts] > 0
                   = l[:attempts]
