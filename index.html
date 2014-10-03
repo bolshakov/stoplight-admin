@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Stoplight-admin : A simple administration interface for the stoplight gem.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Stoplight-admin</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/orgsync/stoplight-admin">View on GitHub</a>
+
+          <h1 id="project_title">Stoplight-admin</h1>
+          <h2 id="project_tagline">A simple administration interface for the stoplight gem.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/orgsync/stoplight-admin/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/orgsync/stoplight-admin/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><a href="https://rubygems.org/gems/stoplight-admin"><img src="https://badge.fury.io/rb/stoplight-admin.svg" alt="Gem version"></a>
+<a href="https://gemnasium.com/orgsync/stoplight-admin"><img src="https://gemnasium.com/orgsync/stoplight-admin.svg" alt="Dependency status"></a></p>
+
+<p>A simple administration interface for <a href="https://github.com/orgsync/stoplight">stoplight</a>.  Monitor the
+status, failures, and invocations of your stoplights.  Change
+stoplight colors, or lock them in either red or green state.</p>
+
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>This project is packaged as a Ruby gem so that you can easily embed it
+in your own code containing the configuration details for your
+<a href="https://github.com/orgsync/stoplight">stoplight</a> data store.</p>
+
+<p>First you'll need a <code>Gemfile</code>:</p>
+
+<div class="highlight highlight-rb"><pre><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+
+<span class="n">gem</span> <span class="s1">'stoplight-admin'</span><span class="p">,</span> <span class="s1">'~&gt; 0.2.7'</span>
+</pre></div>
+
+<p>Run <a href="http://bundler.io">Bundler</a> to install the dependencies:</p>
+
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span>bundle install
+</pre></div>
+
+<p>Lastly we need to make our (tiny) application. Here's a typical
+example using a local Redis data store:</p>
+
+<div class="highlight highlight-rb"><pre><span class="c1"># app.rb</span>
+
+<span class="nb">require</span> <span class="s1">'redis'</span>
+<span class="nb">require</span> <span class="s1">'sinatra'</span>
+<span class="nb">require</span> <span class="s1">'sinatra/stoplight_admin'</span>
+
+<span class="n">redis</span> <span class="o">=</span> <span class="no">Redis</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">url</span><span class="p">:</span> <span class="s1">'redis://localhost:6379'</span><span class="p">)</span>
+<span class="n">set</span> <span class="ss">:data_store</span><span class="p">,</span> <span class="no">Stoplight</span><span class="o">::</span><span class="no">DataStore</span><span class="o">::</span><span class="no">Redis</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">redis</span><span class="p">)</span>
+</pre></div>
+
+<h2>
+<a name="reverse-proxying" class="anchor" href="#reverse-proxying"><span class="octicon octicon-link"></span></a>Reverse Proxying</h2>
+
+<p>If you run Stoplight Admin behind a reverse proxy (nginx, for
+instance) at a URL other than root, you'll need to add the following
+lines to your <code>app.rb</code> file:</p>
+
+<div class="highlight highlight-rb"><pre><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Config</span> <span class="k">do</span> <span class="o">|</span><span class="n">env</span><span class="o">|</span>
+  <span class="n">env</span><span class="o">[</span><span class="s1">'SCRIPT_NAME'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'/your/prefix/here'</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span>bundle <span class="nb">exec </span>ruby app.rb
+</pre></div>
+
+<h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Stoplight is brought to you by <a href="https://github.com/camdez">@camdez</a> and <a href="https://github.com/tfausak">@tfausak</a> from
+<a href="https://github.com/OrgSync">@OrgSync</a>.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Stoplight-admin maintained by <a href="https://github.com/orgsync">orgsync</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
