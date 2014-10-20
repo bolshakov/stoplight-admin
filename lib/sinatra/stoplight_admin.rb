@@ -52,23 +52,21 @@ module Sinatra
       end
 
       def stat_params(ls)
-        total_count = ls.size
-        success_count = ls.count { |l| l[:color] == GREEN }
-        failure_count = total_count - success_count
-
-        if total_count > 0
-          failure_percentage = (100.0 * failure_count / total_count).ceil
-          success_percentage = 100 - failure_percentage
-        else
-          failure_percentage = success_percentage = 0
-        end
-
-        {
-          success_count: success_count,
-          failure_count: failure_count,
-          success_percentage: success_percentage,
-          failure_percentage: failure_percentage
+        h = {
+          count: { green: 0, yellow: 0, red: 0 },
+          percent: { green: 0, yellow: 0, red: 0 }
         }
+        return h if (size = ls.size).zero?
+
+        h[:count_red] = ls.count { |l| l[:color] == RED }
+        h[:count_yellow] = ls.count { |l| l[:color] == YELLOW }
+        h[:count_green] = size - h[:count_red] - h[:count_yellow]
+
+        h[:percent_red] = (100.0 * h[:count_red] / size).ceil
+        h[:percent_yellow] = (100.0 * h[:count_yellow] / size).ceil
+        h[:percent_green] = 100.0 - h[:percent_red] - h[:percent_yellow]
+
+        h
       end
 
       def lock(light)
