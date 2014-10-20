@@ -7,6 +7,12 @@ require 'stoplight'
 module Sinatra
   module StoplightAdmin
     module Helpers
+      COLORS = [
+        GREEN = Stoplight::DataStore::COLOR_GREEN,
+        YELLOW = Stoplight::DataStore::COLOR_YELLOW,
+        RED = Stoplight::DataStore::COLOR_RED
+      ].freeze
+
       def data_store
         return @data_store if defined?(@data_store)
         @data_store = Stoplight.data_store = settings.data_store
@@ -20,13 +26,13 @@ module Sinatra
       end
 
       def light_info(light)
-        green = Stoplight.data_store.green?(light)
-        attempts = green ? 0  : data_store.get_attempts(light)
-        failures = green ? [] : data_store.get_failures(light)
+        color = Stoplight.data_store.get_color(light)
+        attempts = color == GREEN ? 0  : data_store.get_attempts(light)
+        failures = color == GREEN ? [] : data_store.get_failures(light)
 
         {
           name: light,
-          green: green,
+          color: color,
           failures: failures,
           attempts: attempts,
           locked: locked?(light)
@@ -34,7 +40,7 @@ module Sinatra
       end
 
       def light_sort_key(light)
-        [light[:green] ? 1 : 0,
+        [COLORS.index(light[:color]),
          light[:attempts] * -1,
          light[:name]]
       end
@@ -47,7 +53,7 @@ module Sinatra
 
       def stat_params(ls)
         total_count = ls.size
-        success_count = ls.count { |l| l[:green] }
+        success_count = ls.count { |l| l[:color] == GREEN }
         failure_count = total_count - success_count
 
         if total_count > 0

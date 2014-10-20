@@ -32,12 +32,18 @@
           - lights.each do |l|
             %tr
               %td.indicator
-                - if l[:green]
+                - if l[:color] == GREEN
                   %form{method: 'post', action: url('/red')}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
                     %button{type: 'submit', class: 'btn btn-success'}
                       G
                       %span.hidden-xs> REEN
+                - elsif l[:color] == YELLOW
+                  %form{method: 'post', action: url('/green')}
+                    %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
+                    %button{type: 'submit', class: 'btn btn-warning'}
+                      Y
+                      %span.hidden-xs> ELLOW
                 - else
                   %form{method: 'post', action: url('/green')}
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
