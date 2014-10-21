@@ -53,8 +53,8 @@ module Sinatra
 
       def stat_params(ls)
         h = {
-          count: { green: 0, yellow: 0, red: 0 },
-          percent: { green: 0, yellow: 0, red: 0 }
+          count_red: 0, count_yellow: 0, count_green: 0,
+          percent_red: 0, percent_yellow: 0, percent_green: 0
         }
         return h if (size = ls.size).zero?
 
