@@ -7,8 +7,6 @@
     .btn-group
       %form{method: 'post', action: url('/green_all')}
         %button.btn-lg.btn.btn-success{type: 'submit', disabled: count_red + count_yellow > 0 ? nil : 'disabled'} Greenify All
-      %form{method: 'post', action: url('/purge')}
-        %button.btn-lg.btn.btn-default{type: 'submit'} Purge Lights
 
     .progress
       .progress-bar.progress-bar-danger{style: "width: #{percent_red}%"}
@@ -27,8 +25,6 @@
               %abbr{title: 'Locked lights will not change color automatically.'} Locked?
             %th
               %abbr{title: 'Exceptions which caused the light to turn red.'} Failures
-            %th
-              %abbr{title: 'Number of times the light was invoked while red.'} Attempts
             %th Name
         %tbody
           - lights.each do |l|
@@ -75,9 +71,6 @@
                         @
                         %span.timestamp
                           &= failure.time
-              %td.attempts
-                - if l[:attempts] > 0
-                  = l[:attempts]
               %td.name
                 = l[:name]
   - else

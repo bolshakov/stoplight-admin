@@ -8,14 +8,14 @@ module Sinatra
   module StoplightAdmin
     module Helpers
       COLORS = [
-        GREEN = Stoplight::DataStore::COLOR_GREEN,
-        YELLOW = Stoplight::DataStore::COLOR_YELLOW,
-        RED = Stoplight::DataStore::COLOR_RED
+        GREEN = Stoplight::Color::GREEN,
+        YELLOW = Stoplight::Color::YELLOW,
+        RED = Stoplight::Color::RED
       ].freeze
 
       def data_store
         return @data_store if defined?(@data_store)
-        @data_store = Stoplight.data_store = settings.data_store
+        @data_store = Stoplight::Light.default_data_store = settings.data_store
       end
 
       def lights
@@ -26,29 +26,27 @@ module Sinatra
       end
 
       def light_info(light)
-        color = Stoplight.data_store.get_color(light)
-        attempts = color == GREEN ? 0  : data_store.get_attempts(light)
-        failures = color == GREEN ? [] : data_store.get_failures(light)
+        l = Stoplight::Light.new(light) {}
+        color = l.color
+        failures, state = l.data_store.get_all(l)
 
         {
           name: light,
           color: color,
           failures: failures,
-          attempts: attempts,
-          locked: locked?(light)
+          locked: locked?(state)
         }
       end
 
       def light_sort_key(light)
-        [COLORS.index(light[:color]),
-         light[:attempts] * -1,
+        [-COLORS.index(light[:color]),
          light[:name]]
       end
 
-      def locked?(light_name)
-        [Stoplight::DataStore::STATE_LOCKED_GREEN,
-         Stoplight::DataStore::STATE_LOCKED_RED]
-          .include?(data_store.get_state(light_name))
+      def locked?(state)
+        [Stoplight::State::LOCKED_GREEN,
+         Stoplight::State::LOCKED_RED]
+          .include?(state)
       end
 
       def stat_params(ls)
@@ -70,36 +68,36 @@ module Sinatra
       end
 
       def lock(light)
+        l = Stoplight::Light.new(light) {}
         new_state =
-          if Stoplight.data_store.green?(light)
-            Stoplight::DataStore::STATE_LOCKED_GREEN
+          case l.color
+          when Stoplight::Color::GREEN
+            Stoplight::State::LOCKED_GREEN
           else
-            Stoplight::DataStore::STATE_LOCKED_RED
+            Stoplight::State::LOCKED_RED
           end
 
-        data_store.set_state(light, new_state)
+        data_store.set_state(l, new_state)
       end
 
       def unlock(light)
-        data_store.set_state(light, Stoplight::DataStore::STATE_UNLOCKED)
+        l = Stoplight::Light.new(light) {}
+        data_store.set_state(l, Stoplight::State::UNLOCKED)
       end
 
       def green(light)
-        if data_store.get_state(light) == Stoplight::DataStore::STATE_LOCKED_RED
-          new_state = Stoplight::DataStore::STATE_LOCKED_GREEN
-          data_store.set_state(light, new_state)
+        l = Stoplight::Light.new(light) {}
+        if data_store.get_state(l) == Stoplight::State::LOCKED_RED
+          new_state = Stoplight::State::LOCKED_GREEN
+          data_store.set_state(l, new_state)
         end
 
-        data_store.clear_attempts(light)
-        data_store.clear_failures(light)
+        data_store.clear_failures(l)
       end
 
       def red(light)
-        data_store.set_state(light, Stoplight::DataStore::STATE_LOCKED_RED)
-      end
-
-      def purge
-        data_store.clear_stale
+        l = Stoplight::Light.new(light) {}
+        data_store.set_state(l, Stoplight::State::LOCKED_RED)
       end
 
       def with_lights
@@ -144,13 +142,8 @@ module Sinatra
 
       app.post '/green_all' do
         data_store.names
-          .reject { |l| Stoplight.data_store.green?(l) }
+          .reject { |l| Stoplight::Light.new(l) {}.color == Stoplight::Color::GREEN }
           .each { |l| green(l) }
-        redirect to('/')
-      end
-
-      app.post '/purge' do
-        purge
         redirect to('/')
       end
     end
