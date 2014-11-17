@@ -4,7 +4,7 @@
 
 .main
   - if lights.any?
-    .btn-group
+    .well
       %form{method: 'post', action: url('/green_all')}
         %button.btn-lg.btn.btn-success{type: 'submit', disabled: count_red + count_yellow > 0 ? nil : 'disabled'} Greenify All
 
