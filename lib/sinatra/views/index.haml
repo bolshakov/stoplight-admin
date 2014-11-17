@@ -3,7 +3,11 @@
   %p Cop lights, flashlights, spotlights, strobe lights&hellip;
 
 .main
-  - if lights.any?
+  - if lights.empty?
+    .alert.alert-warning{role: 'alert'}
+      %strong No lights found.
+      Ensure that your Stoplight data store is properly configured and that your Stoplight blocks have been run.
+  - else
     .well
       %form{method: 'post', action: url('/green_all')}
         %button.btn-lg.btn.btn-success{type: 'submit', disabled: count_red + count_yellow > 0 ? nil : 'disabled'} Greenify All
@@ -73,7 +77,3 @@
                         @
                         %span.timestamp
                           &= failure.time
-  - else
-    .alert.alert-warning{role: 'alert'}
-      %strong No lights found.
-      Ensure that your Stoplight data store is properly configured and that your Stoplight blocks have been run.
