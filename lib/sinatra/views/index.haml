@@ -23,9 +23,9 @@
             %th Status
             %th
               %abbr{title: 'Locked lights will not change color automatically.'} Locked?
+            %th Name
             %th
               %abbr{title: 'Exceptions which caused the light to turn red.'} Failures
-            %th Name
         %tbody
           - lights.each do |l|
             %tr
@@ -59,6 +59,8 @@
                     %input{type: 'hidden', name: 'names', value: URI.escape(l[:name])}
                     %button{type: 'submit', class: 'btn btn-link'}
                       %span{class: 'glyphicon glyphicon-minus'}
+              %td.name
+                = l[:name]
               %td.failures
                 - if l[:failures]
                   %ul
@@ -71,8 +73,6 @@
                         @
                         %span.timestamp
                           &= failure.time
-              %td.name
-                = l[:name]
   - else
     .alert.alert-warning{role: 'alert'}
       %strong No lights found.
