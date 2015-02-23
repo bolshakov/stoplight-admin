@@ -1,9 +1,0 @@
-AllCops:
-  Exclude:
-  - tmp/**/*
-  - vendor/**/*
-Documentation:
-  Enabled: false
-
-Style/MethodLength:
-  Enabled: false
