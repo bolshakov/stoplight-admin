@@ -1,25 +1,42 @@
 # coding: utf-8
 
-Gem::Specification.new do |spec|
-  spec.name          = 'stoplight-admin'
-  spec.version       = '0.2.9'
-  spec.authors       = ['Cameron Desautels', 'Taylor Fausak']
-  spec.email         = %w(camdez@gmail.com taylor@fausak.me)
-  spec.summary       = %q{A simple administration interface for the stoplight gem.}
-  spec.description   = spec.summary
-  spec.homepage      = 'https://github.com/orgsync/stoplight-admin'
-  spec.license       = 'MIT'
+lib = File.expand_path('lib', File.dirname(__FILE__))
+$LOAD_PATH.push(lib) unless $LOAD_PATH.include?(lib)
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ['lib']
+Gem::Specification.new do |gem|
+  gem.name = 'stoplight-admin'
+  gem.version = '0.2.9'
+  gem.summary = 'A simple administration interface for Stoplight.'
+  gem.description = gem.summary
+  gem.homepage = 'https://github.com/orgsync/stoplight-admin'
+  gem.license = 'MIT'
 
-  spec.add_development_dependency 'bundler', '~> 1.3'
-  spec.add_development_dependency 'rake'
+  gem.required_ruby_version = '>= 1.9.3'
 
-  spec.add_dependency 'haml', '~> 4.0.5'
-  spec.add_dependency 'redis', '~> 3.1.0'
-  spec.add_dependency 'sinatra', '~> 1.4.5'
-  spec.add_dependency 'stoplight', '~> 0.5.0'
+  {
+    'Cameron Desautels' => 'camdez@gmail.com',
+    'Taylor Fausak' => 'taylor@fausak.me'
+  }.tap do |hash|
+    gem.authors = hash.keys
+    gem.email = hash.values
+  end
+
+  gem.files = %w(CONTRIBUTING.md LICENSE.md README.md) +
+    Dir.glob(File.join('lib', '**', '*.rb'))
+
+  {
+    'haml' => '~> 4.0',
+    'redis' => '~> 3.1',
+    'sinatra' => '~> 1.4',
+    'stoplight' => '~> 0.5'
+  }.each do |name, version|
+    gem.add_dependency name, version
+  end
+
+  {
+    'bundler' => '~> 1.8',
+    'rake' => '~> 10.4'
+  }.each do |name, version|
+    gem.add_development_dependency name, version
+  end
 end
