@@ -26,15 +26,15 @@ Gem::Specification.new do |gem|
 
   {
     'haml' => '~> 4.0',
-    'redis' => '~> 3.1',
+    'redis' => '~> 3.2',
     'sinatra' => '~> 1.4',
-    'stoplight' => '~> 0.5'
+    'stoplight' => '~> 1.0'
   }.each do |name, version|
     gem.add_dependency name, version
   end
 
   {
-    'bundler' => '~> 1.8',
+    'bundler' => '~> 1.9',
     'rake' => '~> 10.4'
   }.each do |name, version|
     gem.add_development_dependency name, version
