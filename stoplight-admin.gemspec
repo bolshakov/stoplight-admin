@@ -11,8 +11,6 @@ Gem::Specification.new do |gem|
   gem.homepage = 'https://github.com/orgsync/stoplight-admin'
   gem.license = 'MIT'
 
-  gem.required_ruby_version = '>= 1.9.3'
-
   {
     'Cameron Desautels' => 'camdez@gmail.com',
     'Taylor Fausak' => 'taylor@fausak.me'
@@ -21,22 +19,24 @@ Gem::Specification.new do |gem|
     gem.email = hash.values
   end
 
-  gem.files = %w(CONTRIBUTING.md LICENSE.md README.md) +
+  gem.files = %w(LICENSE.md README.md) +
     Dir.glob(File.join('lib', '**', '*.rb'))
 
+  gem.required_ruby_version = '>= 1.9.3'
+
   {
-    'haml' => '~> 4.0',
-    'redis' => '~> 3.2',
-    'sinatra' => '~> 1.4',
-    'stoplight' => '~> 1.0'
+    'haml' => '4.0',
+    'redis' => '3.2',
+    'sinatra' => '1.4',
+    'stoplight' => '1.0'
   }.each do |name, version|
-    gem.add_dependency name, version
+    gem.add_dependency(name, "~> #{version}")
   end
 
   {
-    'bundler' => '~> 1.9',
-    'rake' => '~> 10.4'
+    'bundler' => '1.10',
+    'rake' => '10.4'
   }.each do |name, version|
-    gem.add_development_dependency name, version
+    gem.add_development_dependency(name, "~> #{version}")
   end
 end
