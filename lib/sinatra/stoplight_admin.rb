@@ -2,6 +2,7 @@
 
 require 'haml'
 require 'sinatra/base'
+require 'sinatra/json'
 require 'stoplight'
 
 module Sinatra
@@ -118,6 +119,13 @@ module Sinatra
         stats = stat_params(ls)
 
         haml :index, locals: stats.merge(lights: ls)
+      end
+
+      app.get '/stats' do
+        ls    = lights
+        stats = stat_params(ls)
+
+        json({stats: stats, lights: ls})
       end
 
       app.post '/lock' do
