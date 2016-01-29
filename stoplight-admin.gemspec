@@ -20,7 +20,8 @@ Gem::Specification.new do |gem|
   end
 
   gem.files = %w(LICENSE.md README.md) +
-    Dir.glob(File.join('lib', '**', '*.rb'))
+    Dir.glob(File.join('lib', '**', '*.rb')) +
+    Dir.glob(File.join('lib', '**', '*.haml'))
 
   gem.required_ruby_version = '>= 1.9.3'
 
