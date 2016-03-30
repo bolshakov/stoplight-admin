@@ -30,14 +30,14 @@ Gem::Specification.new do |gem|
     'redis' => '3.2',
     'sinatra' => '1.4',
     'sinatra-contrib' => '1.4',
-    'stoplight' => '1.0'
+    'stoplight' => '1.4'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
   end
 
   {
     'bundler' => '1.10',
-    'rake' => '10.4'
+    'rake' => '11.1'
   }.each do |name, version|
     gem.add_development_dependency(name, "~> #{version}")
   end
