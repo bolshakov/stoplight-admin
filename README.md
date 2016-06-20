@@ -59,6 +59,28 @@ end
 $ bundle exec ruby app.rb
 ```
 
+## Rails
+
+It is possible to mount Stoplight Admin inside Rails.
+Add something like this to your `config/routes.rb`:
+
+``` rb
+require 'redis'
+require 'sinatra/stoplight_admin'
+
+class StoplightAdmin < Sinatra::Base
+  register Sinatra::StoplightAdmin
+
+  redis = Redis.new # Uses REDIS_URL environment variable.
+  data_store = Stoplight::DataStore::Redis.new(redis)
+  set :data_store, data_store
+end
+
+Rails.application.routes.draw do
+  mount StoplightAdmin => '/stoplights'
+end
+```
+
 ## Credits
 
 Stoplight is brought to you by [@camdez][4] and [@tfausak][5] from
