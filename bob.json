@@ -1,0 +1,14 @@
+{
+  "buildArgs": {
+    "IMAGE_TAG": "quay.io/orgsync/stoplight-admin:{{SHA}}"
+  },
+  "meta": {
+    "slack": {
+      "channel": "#orgsync-notifications"
+    }
+  },
+  "tags": [
+    "quay.io/orgsync/stoplight-admin:{{REF}}",
+    "quay.io/orgsync/stoplight-admin:{{SHA}}"
+  ]
+}
