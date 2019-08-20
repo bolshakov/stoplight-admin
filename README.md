@@ -1,8 +1,3 @@
-:warning:
-This repository is not maintained!
-If you want to volunteer to maintain it,
-please reach out to [@tfausak](https://github.com/tfausak).
-
 # [Stoplight Admin][1]
 
 [![Gem version][7]][8]
