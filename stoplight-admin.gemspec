@@ -27,12 +27,12 @@ Gem::Specification.new do |gem|
 
   {
     'haml' => '5.0.4',
-    'redis' => '4.1',
     'sinatra' => '2.0.5'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
   end
 
+  gem.add_dependency 'redis', '>= 3.2'
   gem.add_dependency 'stoplight', '>= 1.4'
 
   {
