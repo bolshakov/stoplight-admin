@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
 
   {
     'haml' => '5.0.4',
-    'sinatra' => '2.0.5'
+    'sinatra-contrib' => '2.0.5'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
   end
