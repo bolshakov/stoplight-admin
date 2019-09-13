@@ -37,6 +37,7 @@ Gem::Specification.new do |gem|
 
   {
     'bundler' => '1.10',
+    'pry-byebug' => '3.7.0',
     'rake' => '11.1',
     'rspec' => '3.8.0'
   }.each do |name, version|
