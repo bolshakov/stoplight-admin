@@ -37,7 +37,8 @@ Gem::Specification.new do |gem|
 
   {
     'bundler' => '1.10',
-    'rake' => '11.1'
+    'rake' => '11.1',
+    'rspec' => '3.8.0'
   }.each do |name, version|
     gem.add_development_dependency(name, "~> #{version}")
   end
