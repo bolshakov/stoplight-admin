@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
 
   {
     'haml' => '5.0.4',
-    'sinatra' => '2.0.5'
+    'sinatra-contrib' => '2.0.5'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
   end
@@ -37,7 +37,9 @@ Gem::Specification.new do |gem|
 
   {
     'bundler' => '1.10',
-    'rake' => '11.1'
+    'pry-byebug' => '3.7.0',
+    'rake' => '11.1',
+    'rspec' => '3.8.0'
   }.each do |name, version|
     gem.add_development_dependency(name, "~> #{version}")
   end
