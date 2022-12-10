@@ -1,7 +1,6 @@
 # [Stoplight Admin][1]
 
 [![Gem version][7]][8]
-[![Dependency status][9]][10]
 
 A simple administration interface for [stoplight][2].  Monitor the
 status, failures, and invocations of your stoplights.  Change
@@ -86,13 +85,11 @@ end
 Stoplight is brought to you by [@camdez][4] and [@tfausak][5] from
 [@OrgSync][6].
 
-[1]: https://github.com/orgsync/stoplight-admin
-[2]: https://github.com/orgsync/stoplight
+[1]: https://github.com/bolshakov/stoplight-admin
+[2]: https://github.com/bolshakov/stoplight
 [3]: http://bundler.io
 [4]: https://github.com/camdez
 [5]: https://github.com/tfausak
 [6]: https://github.com/OrgSync
 [7]: https://badge.fury.io/rb/stoplight-admin.svg
 [8]: https://rubygems.org/gems/stoplight-admin
-[9]: https://gemnasium.com/orgsync/stoplight-admin.svg
-[10]: https://gemnasium.com/orgsync/stoplight-admin
