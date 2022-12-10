@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version = '0.3.5'
   gem.summary = 'A simple administration interface for Stoplight.'
   gem.description = gem.summary
-  gem.homepage = 'https://github.com/orgsync/stoplight-admin'
+  gem.homepage = 'https://github.com/bolshakov/stoplight-admin'
   gem.license = 'MIT'
 
   {
