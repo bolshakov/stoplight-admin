@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
     Dir.glob(File.join('lib', '**', '*.rb')) +
     Dir.glob(File.join('lib', '**', '*.haml'))
 
-  gem.required_ruby_version = '>= 1.9.3'
+  gem.required_ruby_version = '>= 2.5.0'
 
   {
     'haml' => '5.1.0',
