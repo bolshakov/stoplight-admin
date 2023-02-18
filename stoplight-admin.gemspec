@@ -33,7 +33,7 @@ Gem::Specification.new do |gem|
   end
 
   gem.add_dependency 'redis', '>= 3.2'
-  gem.add_dependency 'stoplight', '>= 1.4'
+  gem.add_dependency 'stoplight', '~> 3.0.0'
 
   {
     'bundler' => '1.10',
