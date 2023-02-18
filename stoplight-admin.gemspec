@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 2.5.0'
 
   {
-    'haml' => '5.1.0',
+    'haml' => '5.0',
     'sinatra-contrib' => '3.0.0'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
