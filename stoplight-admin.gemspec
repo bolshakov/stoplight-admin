@@ -36,10 +36,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'stoplight', '~> 3.0.0'
 
   {
-    'bundler' => '1.10',
-    'pry-byebug' => '3.7.0',
-    'rake' => '11.1',
-    'rspec' => '3.8.0'
+    'bundler' => '2.4',
+    'pry-byebug' => '3.10.0',
+    'rake' => '13.0',
+    'rspec' => '3.12.0'
   }.each do |name, version|
     gem.add_development_dependency(name, "~> #{version}")
   end
