@@ -5,7 +5,7 @@ $LOAD_PATH.push(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name = 'stoplight-admin'
-  gem.version = '0.4.0'
+  gem.version = '0.3.6'
   gem.summary = 'A simple administration interface for Stoplight.'
   gem.description = gem.summary
   gem.homepage = 'https://github.com/bolshakov/stoplight-admin'
