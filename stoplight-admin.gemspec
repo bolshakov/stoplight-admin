@@ -27,13 +27,13 @@ Gem::Specification.new do |gem|
 
   {
     'haml' => '5.0',
-    'sinatra-contrib' => '3.0.0'
+    'sinatra-contrib' => '2.2.3'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
   end
 
   gem.add_dependency 'redis', '>= 3.2'
-  gem.add_dependency 'stoplight', '~> 3.0.0'
+  gem.add_dependency 'stoplight', '>= 1.4'
 
   {
     'bundler' => '2.4',
