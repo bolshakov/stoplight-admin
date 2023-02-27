@@ -103,7 +103,7 @@ module Sinatra
 
       def with_lights
         [*params[:names]]
-          .map  { |l| URI.unescape(l) }
+          .map  { |l| CGI.unescape(l) }
           .each { |l| yield(l) }
       end
     end

@@ -5,7 +5,7 @@ $LOAD_PATH.push(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name = 'stoplight-admin'
-  gem.version = '0.3.5'
+  gem.version = '0.3.6'
   gem.summary = 'A simple administration interface for Stoplight.'
   gem.description = gem.summary
   gem.homepage = 'https://github.com/bolshakov/stoplight-admin'
@@ -23,10 +23,10 @@ Gem::Specification.new do |gem|
     Dir.glob(File.join('lib', '**', '*.rb')) +
     Dir.glob(File.join('lib', '**', '*.haml'))
 
-  gem.required_ruby_version = '>= 1.9.3'
+  gem.required_ruby_version = '>= 2.5.0'
 
   {
-    'haml' => '5.0.4',
+    'haml' => '5.0',
     'sinatra-contrib' => '2.2.3'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
@@ -36,10 +36,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'stoplight', '>= 1.4'
 
   {
-    'bundler' => '1.10',
-    'pry-byebug' => '3.7.0',
-    'rake' => '11.1',
-    'rspec' => '3.8.0'
+    'bundler' => '2.4',
+    'pry-byebug' => '3.10.0',
+    'rake' => '13.0',
+    'rspec' => '3.12.0'
   }.each do |name, version|
     gem.add_development_dependency(name, "~> #{version}")
   end
