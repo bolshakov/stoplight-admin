@@ -1,6 +1,5 @@
 # coding: utf-8
 
-require 'haml'
 require 'sinatra/base'
 require 'sinatra/json'
 require 'stoplight'
@@ -118,7 +117,7 @@ module Sinatra
         ls    = lights
         stats = stat_params(ls)
 
-        haml :index, locals: stats.merge(lights: ls)
+        erb :index, locals: stats.merge(lights: ls)
       end
 
       app.get '/stats' do

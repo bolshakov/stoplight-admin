@@ -21,12 +21,11 @@ Gem::Specification.new do |gem|
 
   gem.files = %w(LICENSE.md README.md) +
     Dir.glob(File.join('lib', '**', '*.rb')) +
-    Dir.glob(File.join('lib', '**', '*.haml'))
+    Dir.glob(File.join('lib', '**', '*.erb'))
 
   gem.required_ruby_version = '>= 2.5.0'
 
   {
-    'haml' => '5.0',
     'sinatra-contrib' => '2.2.3'
   }.each do |name, version|
     gem.add_dependency(name, "~> #{version}")
