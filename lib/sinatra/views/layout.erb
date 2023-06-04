@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Stoplight Admin</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="shortcut icon" href="//i.imgur.com/qvfoNuh.png">
+
+    <style>
+      td.indicator {
+          font-size: 200%;
+      }
+
+      td.name {
+          font-weight: bold;
+      }
+
+      td.locked button {
+          font-size: 200%;
+      }
+
+      td.failures span.error {
+          font-weight: bold;
+      }
+
+      td.failures ul {
+          padding: 0;
+          list-style-type: none;
+      }
+
+      .btn-group form {
+          display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="<%= url('/') %>">Stoplight Admin</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" role="main">
+      <%= yield %>
+    </div>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
