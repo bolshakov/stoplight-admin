@@ -1,0 +1,46 @@
+name: Starfleet Admin
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [
+      synchronize, # PR was updated
+      opened,      # PR was open
+      reopened     # PR was closed and is now open again
+    ]
+
+jobs:
+  RSpec:
+    name: RSpec 💚
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: ['3.0', '3.1', '3.2']
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run tests
+        id: rspec
+        run: bundle exec rspec
+  Rubocop:
+    name: Rubocop 🔎
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      - name: Rubocop
+        run: bundle exec rubocop
