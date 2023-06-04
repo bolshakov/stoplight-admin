@@ -1,5 +1,3 @@
-# coding: utf-8
-
 lib = File.expand_path('lib', File.dirname(__FILE__))
 $LOAD_PATH.push(lib) unless $LOAD_PATH.include?(lib)
 
@@ -19,15 +17,15 @@ Gem::Specification.new do |gem|
     gem.email = hash.values
   end
 
-  gem.files = %w(LICENSE.md README.md) +
-    Dir.glob(File.join('lib', '**', '*.rb')) +
-    Dir.glob(File.join('lib', '**', '*.erb'))
+  gem.files = %w[LICENSE.md README.md] +
+              Dir.glob(File.join('lib', '**', '*.rb')) +
+              Dir.glob(File.join('lib', '**', '*.erb'))
 
   gem.required_ruby_version = '>= 2.5.0'
 
   gem.executables = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
-  gem.add_dependency 'sinatra-contrib', "~> 2.2.3"
   gem.add_dependency 'redis', '>= 3.2'
+  gem.add_dependency 'sinatra-contrib', '~> 2.2.3'
   gem.add_dependency 'stoplight', '>= 1.4'
 end
