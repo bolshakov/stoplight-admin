@@ -1,3 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+
 require 'redis'
 require 'sinatra' # Uses ENV['PORT'].
 require 'sinatra/stoplight_admin'
