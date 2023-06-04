@@ -1,0 +1,6 @@
+# coding: utf-8
+
+source 'https://rubygems.org'
+
+gem 'stoplight-admin', ENV.fetch('STOPLIGHT_ADMIN_VERSION')
+gem 'puma'

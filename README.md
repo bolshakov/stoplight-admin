@@ -32,6 +32,15 @@ example using a local Redis data store:
 ``` rb
 # app.rb
 
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'webrick'
+  gem 'stoplight-admin'
+end
+
 require 'redis'
 require 'sinatra'
 require 'sinatra/stoplight_admin'
