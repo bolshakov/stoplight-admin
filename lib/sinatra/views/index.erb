@@ -4,12 +4,12 @@
 </div>
 
 <div class="main">
-  <%- if lights.empty? %>
+  <% if lights.empty? %>
     <div class="alert alert-warning" role="alert">
       <strong>No lights found.</strong>
       Ensure that your Stoplight data store is properly configured and that your Stoplight blocks have been run.
     </div>
-  <%- else %>
+  <% else %>
     <div class="well">
       <form method="post" action="<%= url('/green_all') %>">
         <button class="btn-lg btn btn-success"
@@ -47,56 +47,56 @@
           </tr>
         </thead>
         <tbody>
-          <%- lights.each do |l| %>
+          <% lights.each do |l| %>
             <tr>
               <td class="indicator">
-                <%- if l[:color] == GREEN %>
+                <% if l[:color] == GREEN %>
                   <form method="post" action="<%= url('/red') %>">
                     <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
                     <button type="submit" class="btn btn-success">
                       <span>G</span><span class="hidden-xs">REEN</span>
                     </button>
                   </form>
-                <%- elsif l[:color] == YELLOW %>
+                <% elsif l[:color] == YELLOW %>
                   <form method="post" action="<%= url('/green') %>">
                     <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
                     <button type="submit" class="btn btn-warning">
                       <span>Y</span><span class="hidden-xs">ELLOW</span>
                     </button>
                   </form>
-                <%- else %>
+                <% else %>
                   <form method="post" action="<%= url('/green') %>">
                     <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
                     <button type="submit" class="btn btn-danger">
                       <span>R</span><span class="hidden-xs">ED</span>
                     </button>
                   </form>
-                <%- end %>
+                <% end %>
               </td>
               <td class="locked">
-                <%- if l[:locked] %>
+                <% if l[:locked] %>
                   <form method="post" action="<%= url('/unlock') %>">
                     <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
                     <button type="submit" class="btn btn-link">
                       <span class="glyphicon glyphicon-lock"></span>
                     </button>
                   </form>
-                <%- else %>
+                <% else %>
                   <form method="post" action="<%= url('/lock') %>">
                     <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
                     <button type="submit" class="btn btn-link">
                       <span class="glyphicon glyphicon-minus"></span>
                     </button>
                   </form>
-                <%- end %>
+                <% end %>
               </td>
               <td class="name">
                 <%= l[:name] %>
               </td>
               <td class="failures">
-                <%- if l[:failures] %>
+                <% if l[:failures] %>
                   <ul>
-                    <%- l[:failures].each do |failure| %>
+                    <% l[:failures].each do |failure| %>
                       <li>
                         <span class="error">
                           <%= ERB::Util.html_escape(failure.error_class) %>
@@ -107,14 +107,14 @@
                           <%= ERB::Util.html_escape(failure.time) %>
                         </span>
                       </li>
-                    <%- end %>
+                    <% end %>
                   </ul>
-                <%- end %>
+                <% end %>
               </td>
             </tr>
-          <%- end %>
+          <% end %>
         </tbody>
       </table>
     </div>
-  <%- end %>
+  <% end %>
 </div>
