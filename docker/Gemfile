@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'puma'
-gem 'stoplight-admin', ENV.fetch('STOPLIGHT_ADMIN_VERSION')
+gem 'stoplight-admin', ENV.fetch('STOPLIGHT_ADMIN_VERSION').sub(/^v/, '')
