@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'sinatra/stoplight_admin/lights_repository/light'
-
-RSpec.describe Sinatra::StoplightAdmin::LightsRepository::Light do
+RSpec.describe StoplightAdmin::LightsRepository::Light do
   subject(:light) do
     described_class.new(
       name: name,

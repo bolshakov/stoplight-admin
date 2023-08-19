@@ -26,6 +26,7 @@ Gem::Specification.new do |gem|
   gem.executables = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
   gem.add_dependency 'redis', '>= 3.2'
+  gem.add_dependency 'zeitwerk'
   gem.add_dependency 'sinatra-contrib', '~> 2.2.3'
   gem.add_dependency 'stoplight', '>= 1.4'
 end

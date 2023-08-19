@@ -1,6 +1,7 @@
 $LOAD_PATH.push(File.join(File.expand_path('.'), 'lib'))
 
 require 'stoplight'
+require 'stoplight_admin'
 require_relative 'support/database_cleaner'
 
 RSpec.configure do |config|

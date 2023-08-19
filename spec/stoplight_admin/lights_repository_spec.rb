@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-require 'sinatra/stoplight_admin/lights_repository'
 
-RSpec.describe Sinatra::StoplightAdmin::LightsRepository, :redis do
+RSpec.describe StoplightAdmin::LightsRepository, :redis do
   subject(:repository) { described_class.new(data_store: data_store) }
 
   let(:data_store) { Stoplight::DataStore::Redis.new(redis) }

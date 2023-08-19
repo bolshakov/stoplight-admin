@@ -1,7 +1,6 @@
-require_relative '../../spec_helper'
-require 'sinatra/stoplight_admin'
+# frozen_string_literal: true
 
-RSpec.describe Sinatra::StoplightAdmin do
+RSpec.describe StoplightAdmin::Application do
   context 'smoke test' do
     it 'registers itself as a sinatra module' do
       expect(described_class).to respond_to(:registered)

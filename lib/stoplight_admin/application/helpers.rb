@@ -1,20 +1,7 @@
-# coding: utf-8
+# frozen_string_literal: true
 
-require 'sinatra/base'
-require 'sinatra/json'
-require 'stoplight'
-require 'sinatra/stoplight_admin/lights_repository'
-require 'sinatra/stoplight_admin/lights_stats'
-require 'sinatra/stoplight_admin/home_action'
-
-module Sinatra
-  module StoplightAdmin
-    COLORS = [
-      GREEN = Stoplight::Color::GREEN,
-      YELLOW = Stoplight::Color::YELLOW,
-      RED = Stoplight::Color::RED
-    ].freeze
-
+module StoplightAdmin
+  module Application
     module Helpers
       COLORS = [
         GREEN = Stoplight::Color::GREEN,
@@ -23,7 +10,7 @@ module Sinatra
       ].freeze
 
       def lights_repository
-        LightsRepository.new(data_store: data_store)
+        StoplightAdmin::LightsRepository.new(data_store: data_store)
       end
 
       def data_store
@@ -88,61 +75,5 @@ module Sinatra
           .each { |l| yield(l) }
       end
     end
-
-    def self.registered(app)
-      app.helpers StoplightAdmin::Helpers
-
-      app.set :data_store, nil
-      app.set :views, File.join(File.dirname(__FILE__), 'views')
-
-      app.get '/' do
-        action = HomeAction.new(
-          lights_repository: lights_repository,
-          lights_stats: Sinatra::StoplightAdmin::LightsStats
-        )
-        lights, stats = action.call
-
-        erb :index, locals: stats.merge(lights: lights)
-      end
-
-      app.get '/stats' do
-        action = HomeAction.new(
-          lights_repository: lights_repository,
-          lights_stats: Sinatra::StoplightAdmin::LightsStats
-        )
-        lights, stats = action.call
-
-        json({stats: stats, lights: lights.map(&:as_json)})
-      end
-
-      app.post '/lock' do
-        with_lights { |l| lock(l) }
-        redirect to('/')
-      end
-
-      app.post '/unlock' do
-        with_lights { |l| unlock(l) }
-        redirect to('/')
-      end
-
-      app.post '/green' do
-        with_lights { |l| green(l) }
-        redirect to('/')
-      end
-
-      app.post '/red' do
-        with_lights { |l| red(l) }
-        redirect to('/')
-      end
-
-      app.post '/green_all' do
-        data_store.names
-          .reject { |l| Stoplight::Light.new(l) {}.color == Stoplight::Color::GREEN }
-          .each { |l| green(l) }
-        redirect to('/')
-      end
-    end
   end
-
-  register StoplightAdmin
 end
