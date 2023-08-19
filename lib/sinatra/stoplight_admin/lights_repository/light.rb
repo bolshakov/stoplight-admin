@@ -47,6 +47,15 @@ module Sinatra
           state == Stoplight::State::UNLOCKED
         end
 
+        def as_json
+          {
+            name: name,
+            color: color,
+            failures: failures,
+            locked: locked?
+          }
+        end
+
         # @return [Array]
         def default_sort_key
           [-COLORS.index(color), name]

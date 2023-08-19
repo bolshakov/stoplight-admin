@@ -4,9 +4,17 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'stoplight'
 require 'sinatra/stoplight_admin/lights_repository'
+require 'sinatra/stoplight_admin/lights_stats'
+require 'sinatra/stoplight_admin/home_action'
 
 module Sinatra
   module StoplightAdmin
+    COLORS = [
+      GREEN = Stoplight::Color::GREEN,
+      YELLOW = Stoplight::Color::YELLOW,
+      RED = Stoplight::Color::RED
+    ].freeze
+
     module Helpers
       COLORS = [
         GREEN = Stoplight::Color::GREEN,
@@ -88,17 +96,23 @@ module Sinatra
       app.set :views, File.join(File.dirname(__FILE__), 'views')
 
       app.get '/' do
-        ls    = lights_repository.all
-        stats = stat_params(ls)
+        action = HomeAction.new(
+          lights_repository: lights_repository,
+          lights_stats: Sinatra::StoplightAdmin::LightsStats
+        )
+        lights, stats = action.call
 
-        erb :index, locals: stats.merge(lights: ls)
+        erb :index, locals: stats.merge(lights: lights)
       end
 
       app.get '/stats' do
-        ls    = lights
-        stats = stat_params(ls)
+        action = HomeAction.new(
+          lights_repository: lights_repository,
+          lights_stats: Sinatra::StoplightAdmin::LightsStats
+        )
+        lights, stats = action.call
 
-        json({stats: stats, lights: ls})
+        json({stats: stats, lights: lights.map(&:as_json)})
       end
 
       app.post '/lock' do
