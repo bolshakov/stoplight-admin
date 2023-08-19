@@ -18,24 +18,6 @@ module StoplightAdmin
         @data_store = Stoplight.default_data_store = settings.data_store
       end
 
-      def stat_params(ls)
-        h = {
-          count_red: 0, count_yellow: 0, count_green: 0,
-          percent_red: 0, percent_yellow: 0, percent_green: 0
-        }
-        return h if (size = ls.size).zero?
-
-        h[:count_red] = ls.count { |l| l.color == RED }
-        h[:count_yellow] = ls.count { |l| l.color == YELLOW }
-        h[:count_green] = size - h[:count_red] - h[:count_yellow]
-
-        h[:percent_red] = (100.0 * h[:count_red] / size).ceil
-        h[:percent_yellow] = (100.0 * h[:count_yellow] / size).ceil
-        h[:percent_green] = 100.0 - h[:percent_red] - h[:percent_yellow]
-
-        h
-      end
-
       def lock(light)
         l = Stoplight::Light.new(light) {}
         new_state =
