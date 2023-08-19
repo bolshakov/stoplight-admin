@@ -3,6 +3,7 @@
 require 'sinatra/base'
 require 'sinatra/json'
 require 'stoplight'
+require 'sinatra/stoplight_admin/lights_repository'
 
 module Sinatra
   module StoplightAdmin
@@ -13,40 +14,13 @@ module Sinatra
         RED = Stoplight::Color::RED
       ].freeze
 
+      def lights_repository
+        LightsRepository.new(data_store: data_store)
+      end
+
       def data_store
         return @data_store if defined?(@data_store)
         @data_store = Stoplight.default_data_store = settings.data_store
-      end
-
-      def lights
-        data_store
-          .names
-          .map { |name| light_info(name) }
-          .sort_by { |light| light_sort_key(light) }
-      end
-
-      def light_info(light)
-        l = Stoplight(light).build
-        color = l.color
-        failures, state = data_store.get_all(l)
-
-        {
-          name: light,
-          color: color,
-          failures: failures,
-          locked: locked?(state)
-        }
-      end
-
-      def light_sort_key(light)
-        [-COLORS.index(light[:color]),
-         light[:name]]
-      end
-
-      def locked?(state)
-        [Stoplight::State::LOCKED_GREEN,
-         Stoplight::State::LOCKED_RED]
-          .include?(state)
       end
 
       def stat_params(ls)
@@ -56,8 +30,8 @@ module Sinatra
         }
         return h if (size = ls.size).zero?
 
-        h[:count_red] = ls.count { |l| l[:color] == RED }
-        h[:count_yellow] = ls.count { |l| l[:color] == YELLOW }
+        h[:count_red] = ls.count { |l| l.color == RED }
+        h[:count_yellow] = ls.count { |l| l.color == YELLOW }
         h[:count_green] = size - h[:count_red] - h[:count_yellow]
 
         h[:percent_red] = (100.0 * h[:count_red] / size).ceil
@@ -114,7 +88,7 @@ module Sinatra
       app.set :views, File.join(File.dirname(__FILE__), 'views')
 
       app.get '/' do
-        ls    = lights
+        ls    = lights_repository.all
         stats = stat_params(ls)
 
         erb :index, locals: stats.merge(lights: ls)

@@ -20,13 +20,19 @@ module Sinatra
         data_store
           .names
           .map { |name| load_light(name) }
+          .sort_by(&:default_sort_key)
       end
 
       private def load_light(name)
         light = build_light(name)
         failures, state = data_store.get_all(light)
 
-        Light.new(name, light.color, state, failures)
+        Light.new(
+          name: name,
+          color: light.color,
+          state: state,
+          failures: failures,
+        )
       end
 
       private def build_light(name)

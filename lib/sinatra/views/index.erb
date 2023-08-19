@@ -50,23 +50,23 @@
           <% lights.each do |l| %>
             <tr>
               <td class="indicator">
-                <% if l[:color] == GREEN %>
+                <% if l.color == GREEN %>
                   <form method="post" action="<%= url('/red') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
+                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
                     <button type="submit" class="btn btn-success">
                       <span>G</span><span class="hidden-xs">REEN</span>
                     </button>
                   </form>
-                <% elsif l[:color] == YELLOW %>
+                <% elsif l.color == YELLOW %>
                   <form method="post" action="<%= url('/green') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
+                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
                     <button type="submit" class="btn btn-warning">
                       <span>Y</span><span class="hidden-xs">ELLOW</span>
                     </button>
                   </form>
                 <% else %>
                   <form method="post" action="<%= url('/green') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
+                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
                     <button type="submit" class="btn btn-danger">
                       <span>R</span><span class="hidden-xs">ED</span>
                     </button>
@@ -74,16 +74,16 @@
                 <% end %>
               </td>
               <td class="locked">
-                <% if l[:locked] %>
+                <% if l.locked? %>
                   <form method="post" action="<%= url('/unlock') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
+                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
                     <button type="submit" class="btn btn-link">
                       <span class="glyphicon glyphicon-lock"></span>
                     </button>
                   </form>
                 <% else %>
                   <form method="post" action="<%= url('/lock') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l[:name]) %>">
+                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
                     <button type="submit" class="btn btn-link">
                       <span class="glyphicon glyphicon-minus"></span>
                     </button>
@@ -91,12 +91,12 @@
                 <% end %>
               </td>
               <td class="name">
-                <%= l[:name] %>
+                <%= l.name %>
               </td>
               <td class="failures">
-                <% if l[:failures] %>
+                <% if l.failures %>
                   <ul>
-                    <% l[:failures].each do |failure| %>
+                    <% l.failures.each do |failure| %>
                       <li>
                         <span class="error">
                           <%= ERB::Util.html_escape(failure.error_class) %>
