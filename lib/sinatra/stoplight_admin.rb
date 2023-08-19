@@ -15,7 +15,7 @@ module Sinatra
 
       def data_store
         return @data_store if defined?(@data_store)
-        @data_store = Stoplight::Light.default_data_store = settings.data_store
+        @data_store = Stoplight.default_data_store = settings.data_store
       end
 
       def lights
@@ -26,9 +26,9 @@ module Sinatra
       end
 
       def light_info(light)
-        l = Stoplight::Light.new(light) {}
+        l = Stoplight(light).build
         color = l.color
-        failures, state = l.data_store.get_all(l)
+        failures, state = data_store.get_all(l)
 
         {
           name: light,

@@ -1,6 +1,7 @@
 $LOAD_PATH.push(File.join(File.expand_path('.'), 'lib'))
 
-require 'pry-byebug'
+require 'stoplight'
+require_relative 'support/database_cleaner'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

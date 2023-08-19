@@ -6,7 +6,9 @@ gem 'webrick'
 
 group :development do
   gem 'bundler'
-  gem 'pry-byebug', '~> 3.10.0'
+  gem 'database_cleaner-redis'
+  gem 'debug'
   gem 'rake', '~> 13.0'
   gem 'rspec', '~> 3.12.0'
 end
+
