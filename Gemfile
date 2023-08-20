@@ -3,7 +3,6 @@ source "https://rubygems.org"
 gemspec
 
 gem "webrick"
-gem "stoplight", path: "/Users/bolshakov/Projects/personal/stoplight"
 
 group :development do
   gem "bundler"
@@ -11,5 +10,5 @@ group :development do
   gem "debug"
   gem "rake", "~> 13.0"
   gem "rspec", "~> 3.12.0"
-  gem "standard"
+  gem "standard", "~> 1.31"
 end

@@ -21,12 +21,12 @@ Gem::Specification.new do |gem|
     Dir.glob(File.join("lib", "**", "*.rb")) +
     Dir.glob(File.join("lib", "**", "*.erb"))
 
-  gem.required_ruby_version = ">= 2.5.0"
+  gem.required_ruby_version = ">= 3.0.0"
 
   gem.executables = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
   gem.add_dependency "redis", ">= 3.2"
   gem.add_dependency "zeitwerk"
   gem.add_dependency "sinatra-contrib", "~> 2.2.3"
-  gem.add_dependency "stoplight", ">= 1.4"
+  gem.add_dependency "stoplight", ">= 4.1"
 end
