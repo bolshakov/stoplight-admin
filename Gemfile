@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'webrick'
+gem 'stoplight', path: "/Users/bolshakov/Projects/personal/stoplight"
 
 group :development do
   gem 'bundler'

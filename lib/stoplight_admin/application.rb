@@ -35,29 +35,39 @@ module StoplightAdmin
       end
 
       app.post '/lock' do
-        with_lights { |l| lock(l) }
+        with_lights do |name|
+          lights_repository.lock(name)
+        end
         redirect to('/')
       end
 
       app.post '/unlock' do
-        with_lights { |l| unlock(l) }
+        with_lights do |name|
+          lights_repository.unlock(name)
+        end
         redirect to('/')
       end
 
       app.post '/green' do
-        with_lights { |l| green(l) }
+        with_lights do |name|
+          lights_repository.lock(name, Stoplight::Color::GREEN)
+        end
         redirect to('/')
       end
 
       app.post '/red' do
-        with_lights { |l| red(l) }
+        with_lights do |name|
+          lights_repository.lock(name, Stoplight::Color::RED)
+        end
         redirect to('/')
       end
 
       app.post '/green_all' do
-        data_store.names
-                  .reject { |l| Stoplight::Light.new(l) {}.color == Stoplight::Color::GREEN }
-                  .each { |l| green(l) }
+        lights_repository
+          .all
+          .reject { _1.color == Stoplight::Color::GREEN }
+          .each { |name| lights_repository.lock(name, Stoplight::Color::GREEN) }
+
         redirect to('/')
       end
     end

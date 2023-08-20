@@ -4,11 +4,11 @@ RSpec.describe StoplightAdmin::LightsRepository, :redis do
   subject(:repository) { described_class.new(data_store: data_store) }
 
   let(:data_store) { Stoplight::DataStore::Redis.new(redis) }
+  let(:name) { 'lights-repository' }
   let(:light) do
     Stoplight(name)
       .with_data_store(data_store)
   end
-  let(:name) { 'lights-repository' }
 
   describe '#all' do
     subject(:lights) { repository.all }
@@ -41,6 +41,46 @@ RSpec.describe StoplightAdmin::LightsRepository, :redis do
           )
         )
       end
+    end
+  end
+
+  describe '#lock' do
+    subject(:lock) { repository.lock(light.name) }
+
+    context 'when the light is green' do
+      it 'locks the light' do
+        expect { lock }
+          .to change { light.state }
+          .to('locked_green')
+      end
+    end
+
+    context 'when the light is red' do
+      before do
+        (light.run { raise }) rescue nil
+        (light.run { raise }) rescue nil
+        (light.run { raise }) rescue nil
+      end
+
+      it 'locks the light' do
+        expect { lock }
+          .to change { light.state }
+          .to('locked_red')
+      end
+    end
+  end
+
+  describe '#unlock' do
+    subject(:unlock) { repository.unlock(light.name) }
+
+    before do
+      light.lock('red')
+    end
+
+    it 'unlocks the light' do
+      expect { unlock }
+        .to change { light.state }
+        .to('unlocked')
     end
   end
 end
