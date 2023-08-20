@@ -5,7 +5,6 @@ require 'bundler/setup'
 require 'redis'
 require 'sinatra' # Uses ENV['PORT'].
 require 'stoplight_admin/application'
-require 'debug'
 
 redis = Redis.new # Uses ENV['REDIS_URL'].
 data_store = Stoplight::DataStore::Redis.new redis

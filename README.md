@@ -37,13 +37,14 @@ require 'bundler/inline'
 gemfile do
   source 'https://rubygems.org'
 
-  gem 'webrick'
+  gem 'redis'
   gem 'stoplight-admin'
+  gem 'webrick'
 end
 
 require 'redis'
 require 'sinatra'
-require 'sinatra/stoplight_admin'
+require 'stoplight_admin/application'
 
 redis = Redis.new(url: 'redis://localhost:6379')
 set :data_store, Stoplight::DataStore::Redis.new(redis)
@@ -74,10 +75,10 @@ Add something like this to your `config/routes.rb`:
 
 ``` rb
 require 'redis'
-require 'sinatra/stoplight_admin'
+require 'stoplight_admin/application'
 
-class StoplightAdmin < Sinatra::Base
-  register Sinatra::StoplightAdmin
+class StoplightAdminApp < Sinatra::Base
+  register StoplightAdmin::Application
 
   redis = Redis.new # Uses REDIS_URL environment variable.
   data_store = Stoplight::DataStore::Redis.new(redis)
@@ -85,7 +86,7 @@ class StoplightAdmin < Sinatra::Base
 end
 
 Rails.application.routes.draw do
-  mount StoplightAdmin => '/stoplights'
+  mount StoplightAdminApp => '/stoplights'
 end
 ```
 
