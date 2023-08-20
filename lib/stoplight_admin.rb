@@ -1,6 +1,4 @@
-# coding: utf-8
-
-require 'stoplight'
+require "stoplight"
 require "zeitwerk"
 
 loader = Zeitwerk::Loader.for_gem

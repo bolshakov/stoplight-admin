@@ -4,38 +4,38 @@ RSpec.describe StoplightAdmin::LightsRepository, :redis do
   subject(:repository) { described_class.new(data_store: data_store) }
 
   let(:data_store) { Stoplight::DataStore::Redis.new(redis) }
-  let(:name) { 'lights-repository' }
+  let(:name) { "lights-repository" }
   let(:light) do
     Stoplight(name)
       .with_data_store(data_store)
   end
 
-  describe '#all' do
+  describe "#all" do
     subject(:lights) { repository.all }
 
-    context 'when there are no lights' do
-      it 'returns empty array' do
+    context "when there are no lights" do
+      it "returns empty array" do
         is_expected.to be_empty
       end
     end
 
-    context 'when there are lights' do
+    context "when there are lights" do
       before do
-        light.run { raise 'whoops' }
+        light.run { raise "whoops" }
       rescue
         nil
       end
 
-      it 'returns light' do
+      it "returns light" do
         is_expected.to contain_exactly(
           have_attributes(
             name: name,
-            color: 'green',
-            state: 'unlocked',
+            color: "green",
+            state: "unlocked",
             failures: contain_exactly(
               have_attributes(
-                error_class: 'RuntimeError',
-                error_message: 'whoops'
+                error_class: "RuntimeError",
+                error_message: "whoops"
               )
             )
           )
@@ -44,66 +44,77 @@ RSpec.describe StoplightAdmin::LightsRepository, :redis do
     end
   end
 
-  describe '#with_color' do
+  describe "#with_color" do
     before do
-      Stoplight('red-light').with_data_store(data_store).lock('red')
-      Stoplight('green-light').with_data_store(data_store).lock('green')
+      Stoplight("red-light").with_data_store(data_store).lock("red")
+      Stoplight("green-light").with_data_store(data_store).lock("green")
     end
 
-    it 'returns light with requested color' do
-      expect(repository.with_color('green'))
-        .to contain_exactly(have_attributes(color: 'green', name: 'green-light'))
+    it "returns light with requested color" do
+      expect(repository.with_color("green"))
+        .to contain_exactly(have_attributes(color: "green", name: "green-light"))
 
+      expect(repository.with_color("red"))
+        .to contain_exactly(have_attributes(color: "red", name: "red-light"))
 
-      expect(repository.with_color('red'))
-        .to contain_exactly(have_attributes(color: 'red', name: 'red-light'))
-
-      expect(repository.with_color('red', 'green')).to contain_exactly(
-        have_attributes(color: 'red', name: 'red-light'),
-        have_attributes(color: 'green', name: 'green-light'),
+      expect(repository.with_color("red", "green")).to contain_exactly(
+        have_attributes(color: "red", name: "red-light"),
+        have_attributes(color: "green", name: "green-light")
       )
 
-      expect(repository.with_color('yellow')).to be_empty
+      expect(repository.with_color("yellow")).to be_empty
     end
   end
 
-  describe '#lock' do
+  describe "#lock" do
     subject(:lock) { repository.lock(light.name) }
 
-    context 'when the light is green' do
-      it 'locks the light' do
+    context "when the light is green" do
+      it "locks the light" do
         expect { lock }
           .to change { light.state }
-          .to('locked_green')
+          .to("locked_green")
       end
     end
 
-    context 'when the light is red' do
+    context "when the light is red" do
       before do
-        (light.run { raise }) rescue nil
-        (light.run { raise }) rescue nil
-        (light.run { raise }) rescue nil
+        begin
+          (light.run { raise })
+        rescue
+          nil
+        end
+        begin
+          (light.run { raise })
+        rescue
+          nil
+        end
+        begin
+          (light.run { raise })
+        rescue
+          nil
+        end
       end
 
-      it 'locks the light' do
+      it "locks the light" do
         expect { lock }
           .to change { light.state }
-          .to('locked_red')
+          .to("locked_red")
       end
     end
   end
 
-  describe '#unlock' do
+  describe "#unlock" do
     subject(:unlock) { repository.unlock(light.name) }
 
     before do
-      light.lock('red')
+      light.lock("red")
     end
 
-    it 'unlocks the light' do
+    it "unlocks the light" do
       expect { unlock }
         .to change { light.state }
-        .to('unlocked')
+        .to("unlocked")
     end
   end
 end

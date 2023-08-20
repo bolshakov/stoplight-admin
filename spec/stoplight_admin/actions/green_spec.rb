@@ -1,38 +1,38 @@
 # frozen_string_literal: true
-#
+
 RSpec.describe StoplightAdmin::Actions::Green do
-  subject(:call) { action.(params) }
+  subject(:call) { action.call(params) }
 
   let(:action) { described_class.new(lights_repository: lights_repository) }
   let(:lights_repository) { instance_double(StoplightAdmin::LightsRepository) }
-  let(:params) { { names: names } }
+  let(:params) { {names: names} }
 
-  context 'when just one light name is provided' do
-    let(:names) { 'testing-light' }
+  context "when just one light name is provided" do
+    let(:names) { "testing-light" }
 
-    it 'locks this light green' do
-      expect(lights_repository).to receive(:lock).with( 'testing-light', 'green')
-
-      call
-    end
-  end
-
-  context 'when two lights are provided' do
-    let(:names) { ['testing-light-1', 'testing-light-2'] }
-
-    it 'locks these lights green' do
-      expect(lights_repository).to receive(:lock).with( 'testing-light-1', 'green')
-      expect(lights_repository).to receive(:lock).with( 'testing-light-2', 'green')
+    it "locks this light green" do
+      expect(lights_repository).to receive(:lock).with("testing-light", "green")
 
       call
     end
   end
 
-  context 'when the light name is has escape characters' do
+  context "when two lights are provided" do
+    let(:names) { ["testing-light-1", "testing-light-2"] }
+
+    it "locks these lights green" do
+      expect(lights_repository).to receive(:lock).with("testing-light-1", "green")
+      expect(lights_repository).to receive(:lock).with("testing-light-2", "green")
+
+      call
+    end
+  end
+
+  context "when the light name is has escape characters" do
     let(:names) { "testing%3Dlight" }
 
-    it 'unescapes it and locks this light green' do
-      expect(lights_repository).to receive(:lock).with( 'testing=light', 'green')
+    it "unescapes it and locks this light green" do
+      expect(lights_repository).to receive(:lock).with("testing=light", "green")
 
       call
     end

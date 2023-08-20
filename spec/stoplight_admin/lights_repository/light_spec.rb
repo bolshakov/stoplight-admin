@@ -6,28 +6,28 @@ RSpec.describe StoplightAdmin::LightsRepository::Light do
       name: name,
       color: color,
       state: state,
-      failures: failures,
+      failures: failures
     )
   end
   let(:failures) { [] }
-  let(:color) { 'green' }
-  let(:name) { 'light-specs' }
+  let(:color) { "green" }
+  let(:name) { "light-specs" }
 
-  describe '#locked?' do
-    context 'when locked green' do
-      let(:state) { 'locked_green' }
-
-      it { is_expected.to be_locked }
-    end
-
-    context 'when locked red' do
-      let(:state) { 'locked_green' }
+  describe "#locked?" do
+    context "when locked green" do
+      let(:state) { "locked_green" }
 
       it { is_expected.to be_locked }
     end
 
-    context 'when unlocked' do
-      let(:state) { 'unlocked' }
+    context "when locked red" do
+      let(:state) { "locked_green" }
+
+      it { is_expected.to be_locked }
+    end
+
+    context "when unlocked" do
+      let(:state) { "unlocked" }
 
       it { is_expected.not_to be_locked }
     end

@@ -1,59 +1,58 @@
 # frozen_string_literal: true
 
-require 'sinatra'
-require 'sinatra/base'
-require 'sinatra/json'
-require 'stoplight_admin'
+require "sinatra"
+require "sinatra/base"
+require "sinatra/json"
+require "stoplight_admin"
 
 module StoplightAdmin
   module Application
-
     def self.registered(app)
       app.helpers Application::Helpers
 
       app.set :data_store, nil
-      app.set :views, File.join(File.dirname(__FILE__), 'views')
+      app.set :views, File.join(File.dirname(__FILE__), "views")
 
-      app.get '/' do
-        lights, stats = dependencies.home_action.()
+      app.get "/" do
+        lights, stats = dependencies.home_action.call
 
         erb :index, locals: stats.merge(lights: lights)
       end
 
-      app.get '/stats' do
-        lights, stats = dependencies.stats_action.()
+      app.get "/stats" do
+        lights, stats = dependencies.stats_action.call
 
         json({stats: stats, lights: lights.map(&:as_json)})
       end
 
-      app.post '/lock' do
-        dependencies.lock_action.(params)
+      app.post "/lock" do
+        dependencies.lock_action.call(params)
 
-        redirect to('/')
+        redirect to("/")
       end
 
-      app.post '/unlock' do
-        dependencies.unlock_action.(params)
+      app.post "/unlock" do
+        dependencies.unlock_action.call(params)
 
-        redirect to('/')
+        redirect to("/")
       end
 
-      app.post '/green' do
-        dependencies.green_action.(params)
+      app.post "/green" do
+        dependencies.green_action.call(params)
 
-        redirect to('/')
+        redirect to("/")
       end
 
-      app.post '/red' do
-        dependencies.red_action.(params)
+      app.post "/red" do
+        dependencies.red_action.call(params)
 
-        redirect to('/')
+        redirect to("/")
       end
 
-      app.post '/green_all' do
-        dependencies.green_all_action.()
+      app.post "/green_all" do
+        dependencies.green_all_action.call
 
-        redirect to('/')
+        redirect to("/")
       end
     end
   end

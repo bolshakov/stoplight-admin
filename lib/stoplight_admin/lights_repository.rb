@@ -60,7 +60,7 @@ module StoplightAdmin
         name: name,
         color: light.color,
         state: state,
-        failures: failures,
+        failures: failures
       )
     end
 

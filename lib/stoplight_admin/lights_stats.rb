@@ -32,7 +32,7 @@ module StoplightAdmin
         count_green: count_green,
         percent_red: percent_red,
         percent_yellow: percent_yellow,
-        percent_green: percent_green,
+        percent_green: percent_green
       )
     end
 
