@@ -15,56 +15,43 @@ module StoplightAdmin
       app.set :views, File.join(File.dirname(__FILE__), 'views')
 
       app.get '/' do
-        action = StoplightAdmin::Actions::Home.new(
-          lights_repository: lights_repository,
-          lights_stats: StoplightAdmin::LightsStats
-        )
-        lights, stats = action.call
+        lights, stats = dependencies.home_action.()
 
         erb :index, locals: stats.merge(lights: lights)
       end
 
       app.get '/stats' do
-        action = StoplightAdmin::Actions::Stats.new(
-          lights_repository: lights_repository,
-          lights_stats: StoplightAdmin::LightsStats
-        )
-        lights, stats = action.call
+        lights, stats = dependencies.stats_action.()
 
         json({stats: stats, lights: lights.map(&:as_json)})
       end
 
       app.post '/lock' do
-        action = StoplightAdmin::Actions::Lock.new(lights_repository: lights_repository)
-        action.(params)
+        dependencies.lock_action.(params)
 
         redirect to('/')
       end
 
       app.post '/unlock' do
-        action = StoplightAdmin::Actions::Unlock.new(lights_repository: lights_repository)
-        action.(params)
+        dependencies.unlock_action.(params)
 
         redirect to('/')
       end
 
       app.post '/green' do
-        action = StoplightAdmin::Actions::Green.new(lights_repository: lights_repository)
-        action.(params)
+        dependencies.green_action.(params)
 
         redirect to('/')
       end
 
       app.post '/red' do
-        action = StoplightAdmin::Actions::Red.new(lights_repository: lights_repository)
-        action.(params)
+        dependencies.red_action.(params)
 
         redirect to('/')
       end
 
       app.post '/green_all' do
-        action = StoplightAdmin::Actions::GreenAll.new(lights_repository: lights_repository)
-        action.()
+        dependencies.green_all_action.()
 
         redirect to('/')
       end

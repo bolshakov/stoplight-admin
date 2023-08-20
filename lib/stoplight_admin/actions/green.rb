@@ -3,17 +3,7 @@
 module StoplightAdmin
   module Actions
     # This action locks light with the specific name green
-    class Green
-      # @!attribute lights_repository
-      #   @return [StoplightAdmin::LightsRepository]
-      attr_reader :lights_repository
-      private :lights_repository
-
-      # @return lights_repository [StoplightAdmin::LightsRepository]
-      def initialize(lights_repository:)
-        @lights_repository = lights_repository
-      end
-
+    class Green < Action
       # @param params [Hash] query parameters
       # @return [void]
       def call(params)
