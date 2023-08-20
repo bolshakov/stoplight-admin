@@ -20,6 +20,17 @@ module StoplightAdmin
         .sort_by(&:default_sort_key)
     end
 
+    # @param colors <String>] colors name
+    # @return [<StoplightAdmin::LightsRepository::Light>] lights with the requested colors
+    #
+    def with_color(*colors)
+      requested_colors = Array(colors)
+
+      all.select do |light|
+        requested_colors.include?(light.color)
+      end
+    end
+
     # @param name [String] locks light by its name
     # @param color [String, nil] locks to this color. When nil is given, locks to the current
     #   color

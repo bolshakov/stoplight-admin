@@ -17,12 +17,6 @@ module StoplightAdmin
         return @data_store if defined?(@data_store)
         @data_store = Stoplight.default_data_store = settings.data_store
       end
-
-      def with_lights
-        [*params[:names]]
-          .map  { |l| CGI.unescape(l) }
-          .each { |l| yield(l) }
-      end
     end
   end
 end

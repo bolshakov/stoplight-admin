@@ -44,6 +44,29 @@ RSpec.describe StoplightAdmin::LightsRepository, :redis do
     end
   end
 
+  describe '#with_color' do
+    before do
+      Stoplight('red-light').with_data_store(data_store).lock('red')
+      Stoplight('green-light').with_data_store(data_store).lock('green')
+    end
+
+    it 'returns light with requested color' do
+      expect(repository.with_color('green'))
+        .to contain_exactly(have_attributes(color: 'green', name: 'green-light'))
+
+
+      expect(repository.with_color('red'))
+        .to contain_exactly(have_attributes(color: 'red', name: 'red-light'))
+
+      expect(repository.with_color('red', 'green')).to contain_exactly(
+        have_attributes(color: 'red', name: 'red-light'),
+        have_attributes(color: 'green', name: 'green-light'),
+      )
+
+      expect(repository.with_color('yellow')).to be_empty
+    end
+  end
+
   describe '#lock' do
     subject(:lock) { repository.lock(light.name) }
 
