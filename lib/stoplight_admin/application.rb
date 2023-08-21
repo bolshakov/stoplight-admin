@@ -58,6 +58,6 @@ module StoplightAdmin
   end
 end
 
-Zeitwerk::Loader.eager_load_all
+StoplightAdmin.loader!.eager_load
 
 register StoplightAdmin::Application
