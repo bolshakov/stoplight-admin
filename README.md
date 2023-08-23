@@ -6,6 +6,9 @@ A simple administration interface for [stoplight][2].  Monitor the
 status, failures, and invocations of your stoplights.  Change
 stoplight colors, or lock them in either red or green state.
 
+The stoplight-admin version 0.4 and above is only compatible with Stoplight 4.1. If you have Stoplight version 
+below 4.0, use [stoplight-admin 0.3.6]. 
+
 ## Configuration
 
 This project is packaged as a Ruby gem so that you can easily embed it
@@ -103,3 +106,4 @@ Stoplight is brought to you by [@camdez][4] and [@tfausak][5] from
 [6]: https://github.com/OrgSync
 [7]: https://badge.fury.io/rb/stoplight-admin.svg
 [8]: https://rubygems.org/gems/stoplight-admin
+[stoplight-admin 0.3.6]: https://github.com/bolshakov/stoplight-admin/releases/tag/v0.3.6
