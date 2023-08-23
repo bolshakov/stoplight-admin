@@ -43,19 +43,19 @@ module StoplightAdmin
       StoplightAdmin::Actions::Unlock.new(lights_repository: lights_repository)
     end
 
-    # @return [StoplightAdmin::Actions::Green]
+    # @return [StoplightAdmin::Actions::LockGreen]
     def green_action
-      StoplightAdmin::Actions::Green.new(lights_repository: lights_repository)
+      StoplightAdmin::Actions::LockGreen.new(lights_repository: lights_repository)
     end
 
-    # @return [StoplightAdmin::Actions::Red]
+    # @return [StoplightAdmin::Actions::LockRed]
     def red_action
-      StoplightAdmin::Actions::Red.new(lights_repository: lights_repository)
+      StoplightAdmin::Actions::LockRed.new(lights_repository: lights_repository)
     end
 
-    # @return [StoplightAdmin::Actions::GreenAll]
+    # @return [StoplightAdmin::Actions::LockAllGreen]
     def green_all_action
-      StoplightAdmin::Actions::GreenAll.new(lights_repository: lights_repository)
+      StoplightAdmin::Actions::LockAllGreen.new(lights_repository: lights_repository)
     end
   end
 end

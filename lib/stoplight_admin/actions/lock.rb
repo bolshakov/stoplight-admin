@@ -14,7 +14,7 @@ module StoplightAdmin
 
       private def light_names(params)
         Array(params[:names])
-          .map { |l| CGI.unescape(l) }
+          .map { |name| CGI.unescape(name) }
       end
     end
   end

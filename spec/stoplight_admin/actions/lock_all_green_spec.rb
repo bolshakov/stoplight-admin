@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe StoplightAdmin::Actions::GreenAll do
+RSpec.describe StoplightAdmin::Actions::LockAllGreen do
   subject(:call) { action.call }
 
   let(:action) { described_class.new(lights_repository: lights_repository) }

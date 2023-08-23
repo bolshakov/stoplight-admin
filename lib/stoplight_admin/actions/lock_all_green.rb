@@ -3,7 +3,7 @@
 module StoplightAdmin
   module Actions
     # This action locks all lights green
-    class GreenAll < Action
+    class LockAllGreen < Action
       # @return [void]
       def call(*)
         lights_repository

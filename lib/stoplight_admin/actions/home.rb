@@ -4,7 +4,7 @@ module StoplightAdmin
   module Actions
     class Home < Action
       # @!attribute lights_stats
-      #   @return [StoplightAdmin::LightsStats]
+      #   @return [Class<StoplightAdmin::LightsStats>]
       attr_reader :lights_stats
       private :lights_stats
 
