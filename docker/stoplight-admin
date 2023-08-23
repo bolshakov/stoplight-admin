@@ -1,16 +1,16 @@
 #!/usr/bin/env ruby
 
-require 'bundler/setup'
+require "bundler/setup"
 
-require 'redis'
-require 'sinatra' # Uses ENV['PORT'].
-require 'sinatra/stoplight_admin'
+require "redis"
+require "sinatra" # Uses ENV['PORT'].
+require "stoplight_admin/application"
 
 redis = Redis.new # Uses ENV['REDIS_URL'].
 data_store = Stoplight::DataStore::Redis.new redis
 set :data_store, data_store
 set :environment, :production
 
-get '/health-check' do
+get "/health-check" do
   redis.ping
 end
