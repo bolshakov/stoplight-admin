@@ -27,6 +27,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "redis", ">= 3.2"
   gem.add_dependency "zeitwerk"
-  gem.add_dependency "sinatra-contrib", ">= 2.2.3", "< 3.2.0"
+  gem.add_dependency "sinatra-contrib", ">= 2.2.3", "< 4.1.0"
   gem.add_dependency "stoplight", ">= 4.1"
 end
