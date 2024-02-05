@@ -9,6 +9,6 @@ group :development do
   gem "database_cleaner-redis"
   gem "debug"
   gem "rake", "~> 13.0"
-  gem "rspec", "~> 3.12.0"
+  gem "rspec", "~> 3.13.0"
   gem "standard", "~> 1.31"
 end
