@@ -91,7 +91,7 @@
                 <% end %>
               </td>
               <td class="name">
-                <%= l.name %>
+                <%= ERB::Util.html_escape(l.name) %>
               </td>
               <td class="failures">
                 <% if l.failures %>
