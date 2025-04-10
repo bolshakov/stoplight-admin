@@ -2,7 +2,6 @@
 
 require "sinatra"
 require "sinatra/base"
-require "sinatra/json"
 require "stoplight_admin"
 
 module StoplightAdmin
