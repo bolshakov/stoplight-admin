@@ -40,6 +40,8 @@ require 'bundler/inline'
 gemfile do
   source 'https://rubygems.org'
 
+  gem "puma"
+  gem "rackup"
   gem 'redis'
   gem 'stoplight-admin'
   gem 'webrick'
