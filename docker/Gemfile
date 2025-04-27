@@ -1,4 +1,7 @@
 source "https://rubygems.org"
 
+gem "rackup"
 gem "puma"
+# gem "stoplight", github: "bolshakov/stoplight", branch: "master"
+# gem "stoplight-admin", path: ".."
 gem "stoplight-admin", ENV.fetch("STOPLIGHT_ADMIN_VERSION").sub(/^v/, "")
