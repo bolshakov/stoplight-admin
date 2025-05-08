@@ -54,7 +54,7 @@ module StoplightAdmin
 
     private def load_light(name)
       light = build_light(name)
-      failures, state = data_store.get_all(light)
+      failures, state = data_store.get_all(light.config)
 
       Light.new(
         name: name,
@@ -65,7 +65,7 @@ module StoplightAdmin
     end
 
     private def build_light(name)
-      Stoplight(name).with_data_store(data_store).build
+      Stoplight(name, data_store: data_store)
     end
   end
 end

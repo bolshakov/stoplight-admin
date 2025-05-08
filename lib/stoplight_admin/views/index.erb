@@ -1,120 +1,36 @@
-<div class="jumbotron hidden-xs hidden-sm">
-  <h1>&#x1f6a6; All of the Lights</h1>
-  <p>Cop lights, flashlights, spotlights, strobe lights&hellip;</p>
-</div>
-
-<div class="main">
-  <% if lights.empty? %>
-    <div class="alert alert-warning" role="alert">
-      <strong>No lights found.</strong>
-      Ensure that your Stoplight data store is properly configured and that your Stoplight blocks have been run.
-    </div>
-  <% else %>
-    <div class="well">
-      <form method="post" action="<%= url('/green_all') %>">
-        <button class="btn-lg btn btn-success"
-                type="submit"
-                <%= count_red + count_yellow > 0 ? nil : "disabled" %>>
-          Greenify All
-        </button>
-      </form>
-    </div>
-
-    <div class="progress">
-      <div class="progress-bar progress-bar-danger" style="width: <%= percent_red %>%">
-        <span><%= count_red %></span>
+<% if lights.empty? %>
+  <section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+      <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20">
+        <svg class="lucide lucide-unplug-icon lucide-unplug w-8 h-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m19 5 3-3"/><path d="m2 22 3-3"/><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z"/><path d="M7.5 13.5 10 11"/><path d="M10.5 16.5 13 14"/><path d="m12 6 6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"/>
+        </svg>
       </div>
-      <div class="progress-bar progress-bar-warning" style="width: <%= percent_yellow %>%">
-        <span><%= count_yellow %></span>
+
+      <h2 class="mb-3 text-2xl font-semibold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        No lights found
+      </h2>
+
+      <div class="space-y-4">
+        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+          Ensure that your Stoplight data store is properly configured and that your Stoplight blocks have been run.
+        </p>
       </div>
-      <div class="progress-bar progress-bar-success" style="width: <%= percent_green %>%">
-        <span><%= count_green %></span>
+
+      <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+        <a href="javascript:location.reload();" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw-icon lucide-refresh-ccw w-3.5 h-3.5 me-2">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/>
+          </svg>
+          Refresh Lights
+        </a>
       </div>
     </div>
-
-    <div class="lights">
-      <table class="table table-hover">
-        <thead class="hidden-xs">
-          <tr>
-            <th>Status</th>
-            <th>
-              <abbr title="Locked lights will not change color automatically.">Locked?</abbr>
-            </th>
-            <th>Name</th>
-            <th>
-              <abbr title="Exceptions which caused the light to turn red.">Failures</abbr>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% lights.each do |l| %>
-            <tr>
-              <td class="indicator">
-                <% if l.color == GREEN %>
-                  <form method="post" action="<%= url('/red') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
-                    <button type="submit" class="btn btn-success">
-                      <span>G</span><span class="hidden-xs">REEN</span>
-                    </button>
-                  </form>
-                <% elsif l.color == YELLOW %>
-                  <form method="post" action="<%= url('/green') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
-                    <button type="submit" class="btn btn-warning">
-                      <span>Y</span><span class="hidden-xs">ELLOW</span>
-                    </button>
-                  </form>
-                <% else %>
-                  <form method="post" action="<%= url('/green') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
-                    <button type="submit" class="btn btn-danger">
-                      <span>R</span><span class="hidden-xs">ED</span>
-                    </button>
-                  </form>
-                <% end %>
-              </td>
-              <td class="locked">
-                <% if l.locked? %>
-                  <form method="post" action="<%= url('/unlock') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
-                    <button type="submit" class="btn btn-link">
-                      <span class="glyphicon glyphicon-lock"></span>
-                    </button>
-                  </form>
-                <% else %>
-                  <form method="post" action="<%= url('/lock') %>">
-                    <input type="hidden" name="names" value="<%= ERB::Util.html_escape(l.name) %>">
-                    <button type="submit" class="btn btn-link">
-                      <span class="glyphicon glyphicon-minus"></span>
-                    </button>
-                  </form>
-                <% end %>
-              </td>
-              <td class="name">
-                <%= ERB::Util.html_escape(l.name) %>
-              </td>
-              <td class="failures">
-                <% if l.failures %>
-                  <ul>
-                    <% l.failures.each do |failure| %>
-                      <li>
-                        <span class="error">
-                          <%= ERB::Util.html_escape(failure.error_class) %>
-                          \:
-                          <%= ERB::Util.html_escape(failure.error_message) %>
-                        </span>
-                        <span class="timestamp">
-                          <%= ERB::Util.html_escape(failure.time) %>
-                        </span>
-                      </li>
-                    <% end %>
-                  </ul>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
-</div>
+  </section>
+<% else %>
+  <section class="justify-center space-y-4">
+    <% lights.each do |light| %>
+      <%= erb :_card, locals: { light:, color: light.color } %>
+    <% end %>
+  </section>
+<% end %>
