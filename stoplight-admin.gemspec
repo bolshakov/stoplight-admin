@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
     Dir.glob(File.join("lib", "**", "*.rb")) +
     Dir.glob(File.join("lib", "**", "*.erb"))
 
-  gem.required_ruby_version = ">= 3.0.0"
+  gem.required_ruby_version = ">= 3.2"
 
   gem.executables = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
 
