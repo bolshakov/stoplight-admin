@@ -54,13 +54,14 @@ module StoplightAdmin
 
     private def load_light(name)
       light = build_light(name)
-      failures, state = data_store.get_all(light.config)
+      # failures, state
+      metadata = data_store.get_metadata(light.config)
 
       Light.new(
         name: name,
         color: light.color,
-        state: state,
-        failures: failures
+        state: metadata.locked_state,
+        failures: [metadata.last_error].compact
       )
     end
 

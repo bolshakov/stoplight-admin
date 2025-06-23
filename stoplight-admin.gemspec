@@ -29,5 +29,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency "zeitwerk"
   gem.add_dependency "sinatra", "~> 4.0"
   gem.add_dependency "sinatra-contrib", "~> 4.0"
-  gem.add_dependency "stoplight", ">= 4.1"
+  gem.add_dependency "stoplight", "5.0.2"
 end
